@@ -1,34 +1,79 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { RegisterUserDto, LoginUserDto, ChangePasswordDto  } from './dto/auth.dto';
+import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post("register")
+  register(@Body() registerUserDto: RegisterUserDto) {
+    return this.authService.register(registerUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Get("verify-email")
+  verifyEmail(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  @Post("resend-verify-email")
+  resendVerifyEmail(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @Post("google-login")
+  googleLogin(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
+  }
+  
+  @Post("login")
+  login(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post('login')
+  // @Public() 
+  @ApiOperation({ summary: 'Login' }) 
+  @ApiConsumes('application/x-www-form-urlencoded')
+  @ApiBody({
+     description: 'Login with email and password',
+     type: LoginUserDto,
+   })
+  create(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
   }
+
+  
+  // @Post("logout")
+  // logout(@Body() loginUserDto: LoginUserDto) {
+  //   return this.authService.login(loginUserDto);
+  // }
+
+  @Post("forgot-password")
+  forgot_password(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
+  }
+
+  @Post("change-password")
+  change_password(@Body() changePasswordDto: ChangePasswordDto) {
+    return this.authService.changePassword(changePasswordDto);
+  }
+
+  @Get("profile")
+  getProfile(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
+  }
+
+  @Post("update-profile")
+  updateProfile(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
+  }
+
+
+  
+
+
+
+  
 }

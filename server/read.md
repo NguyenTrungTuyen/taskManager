@@ -25,6 +25,11 @@ https://www.npmjs.com/package/api-query-params
 8. auth
 + npm i @nestjs/jwt
 
+
+npm install bcrypt
+
+npm install --save-dev @types/bcrypt
+
 https://stackoverflow.com/questions/54308318/how-to-get-the-configurations-from-within-a-module-import-in-nestjs
 
 https://www.uuidgenerator.net/

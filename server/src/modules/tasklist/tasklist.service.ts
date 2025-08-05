@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTasklistDto } from './dto/tasklist.dto';
-import { UpdateTasklistDto } from './dto/update-tasklist.dto';
+// import { UpdateTasklistDto } from './dto/update-tasklist.dto';
 
 @Injectable()
 export class TasklistService {
@@ -16,9 +16,9 @@ export class TasklistService {
     return `This action returns a #${id} tasklist`;
   }
 
-  update(id: number, updateTasklistDto: UpdateTasklistDto) {
-    return `This action updates a #${id} tasklist`;
-  }
+  // update(id: number, updateTasklistDto: UpdateTasklistDto) {
+  //   return `This action updates a #${id} tasklist`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} tasklist`;

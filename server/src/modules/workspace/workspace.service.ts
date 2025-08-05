@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWorkspaceDto } from './dto/workspace.dto';
-import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
+// import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 
 @Injectable()
 export class WorkspaceService {
@@ -16,9 +16,9 @@ export class WorkspaceService {
     return `This action returns a #${id} workspace`;
   }
 
-  update(id: number, updateWorkspaceDto: UpdateWorkspaceDto) {
-    return `This action updates a #${id} workspace`;
-  }
+  // update(id: number, updateWorkspaceDto: UpdateWorkspaceDto) {
+  //   return `This action updates a #${id} workspace`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} workspace`;

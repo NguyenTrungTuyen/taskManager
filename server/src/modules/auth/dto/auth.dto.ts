@@ -34,6 +34,11 @@ export class RefreshTokenDto {
 
 
 export class ChangePasswordDto {
+
+  @ApiProperty()
+  @IsEmail()
+  email: string;
+
   @ApiProperty({ example: 'OldPass123' })
   @IsString()
   oldPassword: string;
@@ -42,4 +47,11 @@ export class ChangePasswordDto {
   @IsString()
   @MinLength(6)
   newPassword: string;
+
+  @ApiProperty({ example: 'NewPass456' })
+  @IsString()
+  @MinLength(6)
+  comparePassword: string;
+
+
 }

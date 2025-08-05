@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SocketService } from './socket.service';
 import { CreateSocketDto } from './dto/socket.dto';
-import { UpdateSocketDto } from './dto/update-socket.dto';
+// import { UpdateSocketDto } from './dto/update-socket.dto';
 
 @Controller('socket')
 export class SocketController {
@@ -22,10 +22,10 @@ export class SocketController {
     return this.socketService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSocketDto: UpdateSocketDto) {
-    return this.socketService.update(+id, updateSocketDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateSocketDto: UpdateSocketDto) {
+  //   return this.socketService.update(+id, updateSocketDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

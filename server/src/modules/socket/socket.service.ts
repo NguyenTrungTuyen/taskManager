@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSocketDto } from './dto/socket.dto';
-import { UpdateSocketDto } from './dto/update-socket.dto';
+// import { UpdateSocketDto } from './dto/update-socket.dto';
 
 @Injectable()
 export class SocketService {
@@ -16,9 +16,9 @@ export class SocketService {
     return `This action returns a #${id} socket`;
   }
 
-  update(id: number, updateSocketDto: UpdateSocketDto) {
-    return `This action updates a #${id} socket`;
-  }
+  // update(id: number, updateSocketDto: UpdateSocketDto) {
+  //   return `This action updates a #${id} socket`;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} socket`;

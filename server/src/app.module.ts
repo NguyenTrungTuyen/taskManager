@@ -9,11 +9,41 @@ import { TaskModule } from './modules/task/task.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { SocketModule } from './modules/socket/socket.module';
-import { CommonModule } from './common/common.module';
+// import { CommonModule } from './common/common.module';
 import { TasklistModule } from './modules/tasklist/tasklist.module';
 
+import { ConfigModule, ConfigService } from "@nestjs/config"
+import { MongooseModule } from '@nestjs/mongoose';
+
 @Module({
-  imports: [AuthModule, UserModule, WorkspaceModule, BoardModule, TaskModule, CommentModule, NotificationModule, SocketModule, CommonModule, TasklistModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    WorkspaceModule,
+    BoardModule,
+    TaskModule,
+    CommentModule,
+    NotificationModule,
+    SocketModule,
+    // CommonModule,
+    TasklistModule,
+    // Config module - load environment variables
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ".env",
+    }),
+    // Database connection
+   ConfigModule.forRoot({isGlobal: true}),
+   MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+
+
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
