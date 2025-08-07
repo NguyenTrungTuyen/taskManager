@@ -50,29 +50,12 @@ export class AuthService {
     return await this.userModel.findOne({email})
   }
 
-
- async login(loginUserDto: LoginUserDto) {
-      const user = await this.findByEmail(loginUserDto.email);
-    if (!user) {
-       throw new UnauthorizedException('Tài khoản không tồn tại!');
-    }
-    const isValidPassword = await comparePasswordHelper(loginUserDto.password, user.password)
-    if (!isValidPassword) {
-      throw new UnauthorizedException("Tên đăng nhập hoặc mật khẩu không đúng!");
-    }
-    console.log("Đăng nhập thành công!");
-
-    const payload = { sub:user._id, username: user.email};
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
-  }
-
-//change password
+  
+  //change password
   async changePassword(changePasswordDto: ChangePasswordDto) {
     const user = await this.findByEmail(changePasswordDto.email);
-     if (!user) {
-       throw new UnauthorizedException('Tài khoản không tồn tại!');
+    if (!user) {
+      throw new UnauthorizedException('Tài khoản không tồn tại!');
     }
     const isValidPassword = await comparePasswordHelper(changePasswordDto.oldPassword, user.password);
     if (!isValidPassword) {
@@ -93,7 +76,7 @@ export class AuthService {
   async getProfile(userId: string) {
     
   }
-
+  
   //send reset password email
   async sendResetPassEmail(forgotPasswordDto: ForgotPasswordDto) {
     const user = await this.findByEmail(forgotPasswordDto.email);
@@ -103,13 +86,13 @@ export class AuthService {
     // Logic to send reset password email
     const resetToken = this.jwtService.sign({ email: user.email }, { expiresIn: '30m' });
     console.log(`Reset token: ${resetToken}`);
-    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+    const resetLink = `http://localhost:3003/reset-password?token=${resetToken}`;
     console.log(`Reset link: ${resetLink}`);
     await this.mailService.sendResetPassword(user.email, resetLink);
-
+    
     return { message: 'Email reset password đã được gửi!' };
   }
-
+  
   //reset password
   async resetPassword(resetPasswordDto: ResetPasswordDto) {
     const token = resetPasswordDto.token; 
@@ -128,7 +111,24 @@ export class AuthService {
       throw new BadRequestException('Token không hợp lệ hoặc đã hết hạn!');
     }
   }
-
+  
+   async login(loginUserDto: LoginUserDto) {
+        const user = await this.findByEmail(loginUserDto.email);
+      if (!user) {
+         throw new UnauthorizedException('Tài khoản không tồn tại!');
+      }
+      const isValidPassword = await comparePasswordHelper(loginUserDto.password, user.password)
+      if (!isValidPassword) {
+        throw new UnauthorizedException("Tên đăng nhập hoặc mật khẩu không đúng!");
+      }
+      console.log("Đăng nhập thành công!");
+  
+      const payload = { sub:user._id, username: user.email};
+      return {
+        access_token: await this.jwtService.signAsync(payload),
+      };
+    }
+  
   async googleLogin(user: any) {
     // Logic to handle Google login
     const { email, firstName, lastName, picture } = user;

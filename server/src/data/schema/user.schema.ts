@@ -19,7 +19,7 @@ export class User {
   @Prop()
   picture?: string;
 
-  @Prop({required: false, unique: true})
+  @Prop({required: false, unique: true, sparse: true})
   googleId?: string;
 
   @Prop({default: 'local'})

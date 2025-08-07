@@ -40,15 +40,9 @@ export class AuthController {
     return {
       message: 'Login successful',
       accessToken: result.access_token,
-      user: result.user,
+      // user: result.user,
     }
   }
-
-  
-  // @Post("login")
-  // login(@Body() loginUserDto: LoginUserDto) {
-  //   return this.authService.login(loginUserDto);
-  // }
 
   @Post('login')
   // @Public() 
@@ -61,42 +55,37 @@ export class AuthController {
   create(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
-
   
-  // @Post("logout")
-  // logout(@Body() loginUserDto: LoginUserDto) {
-  //   return this.authService.login(loginUserDto);
-  // }
-
+  
   @Post("forgot-password")
- async forgot_password(@Body() forgotPasswordDto: ForgotPasswordDto) {
+  async forgot_password(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return this.authService.sendResetPassEmail(forgotPasswordDto);
   }
-
+  
   @Post("reset-password")
   reset_password(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.authService.resetPassword(resetPasswordDto);
   } 
-
+  
   @Post("change-password")
   change_password(@Body() changePasswordDto: ChangePasswordDto) {
     return this.authService.changePassword(changePasswordDto);
   }
 
-  @Get("profile")
-  getProfile(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
-  }
-
-  @Post("update-profile")
-  updateProfile(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
-  }
-
-
+  // @Post("logout")
+  // logout(@Body() loginUserDto: LoginUserDto) {
+  //   return this.authService.login(loginUserDto);
+  // }
   
+  // @Get("profile")
+  // getProfile(@Body() loginUserDto: LoginUserDto) {
+  //   return this.authService.login(loginUserDto);
+  // }
 
-
+  // @Post("update-profile")
+  // updateProfile(@Body() loginUserDto: LoginUserDto) {
+  //   return this.authService.login(loginUserDto);
+  // }
 
   
 }

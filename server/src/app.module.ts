@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,6 +15,7 @@ import { TasklistModule } from './modules/tasklist/tasklist.module';
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { MongooseModule } from '@nestjs/mongoose';
 import { CustomMailerModule, } from './modules/mailer/mailer.module';
+import { AuthMiddleware } from './common/middleware/verify_access_token';
 
 @Module({
   imports: [
@@ -52,4 +53,14 @@ import { CustomMailerModule, } from './modules/mailer/mailer.module';
   providers: [AppService],
   exports: [CustomMailerModule],
 })
-export class AppModule {}
+export class AppModule {
+  //  configure(consumer: MiddlewareConsumer) {
+  //   consumer
+  //     .apply(AuthMiddleware)
+  //     .forRoutes(
+  //       {path: 'users', method: RequestMethod.ALL}, 
+  //       {path: 'users/id', method: RequestMethod.ALL}
+        
+  //     ); 
+  // }
+}
