@@ -5,9 +5,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema, } from '../../data/schema/user.schema';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { CustomMailerModule } from '../mailer/mailer.module';
+import { GoogleStrategy } from './google.strategy';
+
 
 @Module({
   imports: [
+     CustomMailerModule, 
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
      JwtModule.registerAsync({
   useFactory: async (configService: ConfigService) => ({
@@ -21,7 +25,7 @@ import { ConfigService } from '@nestjs/config';
 }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, GoogleStrategy],
   exports: [AuthService],// su dung cho model khac
 })
 export class AuthModule {}

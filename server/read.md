@@ -25,6 +25,14 @@ https://www.npmjs.com/package/api-query-params
 8. auth
 + npm i @nestjs/jwt
 
+9. mail
++ npm install --save @nestjs-modules/mailer nodemailer
+
+10. google login
+npm install @nestjs/passport passport passport-google-oauth20
+npm install --save-dev @types/passport-google-oauth20
+
+
 
 npm install bcrypt
 

@@ -14,6 +14,7 @@ import { TasklistModule } from './modules/tasklist/tasklist.module';
 
 import { ConfigModule, ConfigService } from "@nestjs/config"
 import { MongooseModule } from '@nestjs/mongoose';
+import { CustomMailerModule, } from './modules/mailer/mailer.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     // Database connection
    ConfigModule.forRoot({isGlobal: true}),
+
    MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -42,9 +44,12 @@ import { MongooseModule } from '@nestjs/mongoose';
       inject: [ConfigService],
     }),
 
+    CustomMailerModule,
+
 
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [CustomMailerModule],
 })
 export class AppModule {}

@@ -7,14 +7,26 @@ export class User {
   @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false})
   password: string;
 
-  @Prop({ required: true })
-  name: string;
+  @Prop({ required: false })
+  firstName: string;
+
+  @Prop({ required: false })
+  lastName: string;
 
   @Prop()
-  avatarUrl?: string;
+  picture?: string;
+
+  @Prop({required: false, unique: true})
+  googleId?: string;
+
+  @Prop({default: 'local'})
+  origin?: string;
+
+  @Prop({default: true})
+  isActive?: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

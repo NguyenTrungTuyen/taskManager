@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterUserDto, LoginUserDto, ChangePasswordDto  } from './dto/auth.dto';
+import { RegisterUserDto, LoginUserDto, ChangePasswordDto, ForgotPasswordDto, ResetPasswordDto  } from './dto/auth.dto';
 import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { access } from 'fs';
 
 @Controller('auth')
 export class AuthController {
@@ -22,15 +24,31 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
-  @Post("google-login")
-  googleLogin(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
+  @Get("google")
+  @UseGuards(AuthGuard('google'))
+  async googleAuth() {
+   
   }
   
-  @Post("login")
-  login(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
+  @Get("google/callback")
+  @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Req() req: any) {
+
+    console.log(req.user);
+
+    const result = await this.authService.googleLogin(req.user); 
+    return {
+      message: 'Login successful',
+      accessToken: result.access_token,
+      user: result.user,
+    }
   }
+
+  
+  // @Post("login")
+  // login(@Body() loginUserDto: LoginUserDto) {
+  //   return this.authService.login(loginUserDto);
+  // }
 
   @Post('login')
   // @Public() 
@@ -51,9 +69,14 @@ export class AuthController {
   // }
 
   @Post("forgot-password")
-  forgot_password(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
+ async forgot_password(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.sendResetPassEmail(forgotPasswordDto);
   }
+
+  @Post("reset-password")
+  reset_password(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto);
+  } 
 
   @Post("change-password")
   change_password(@Body() changePasswordDto: ChangePasswordDto) {

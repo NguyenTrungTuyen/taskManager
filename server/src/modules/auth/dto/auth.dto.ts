@@ -53,5 +53,21 @@ export class ChangePasswordDto {
   @MinLength(6)
   comparePassword: string;
 
+}
 
+export class ForgotPasswordDto {
+  @ApiProperty({ example: 'w@gmail.com'})
+  @IsEmail()
+  email: string;
+}
+
+export class ResetPasswordDto {
+  @ApiProperty({ example: ''})
+  @IsString()
+  token: string;
+
+  @ApiProperty({ example: 'NewPass456' })
+  @IsString()
+  @MinLength(6)   
+  newPassword: string;  
 }
