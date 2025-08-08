@@ -5,9 +5,12 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from 'src/common/passport/jwt.strategy';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from '../../data/schema/user.schema';
 
 @Module({
   imports: [
+     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     PassportModule, 
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({
